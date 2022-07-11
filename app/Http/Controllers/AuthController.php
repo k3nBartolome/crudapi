@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use App\Http\Resources\UserResource;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -34,13 +35,15 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid Email or Password',
-            ]);
+            ]
+          ,409);
         }
   
         return response()->json([
             'success' => true,
             'token' => $jwt_token,
             'message' => 'goods',
+            'data' => auth()->user()
         ]);
     }
 

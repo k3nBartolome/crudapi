@@ -36,16 +36,27 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+        $request->validate([
+        // 'lname'=>'required|string|max:255|unique',
+        // 'fname'=>'required|string|max:255|unique',
+        // 'mname'=>'string|max:255|',
+        // 'email'=>'required|string|email|unique|max:255',
+        'password' => 'min:8',
+        'confirmpassword' => 'required_with:password|same:password|min:8'
+        ]);
+
         $user = new User();
         $user->lname=$request->lname;
         $user->fname=$request->fname;
         $user->mname=$request->mname;
         $user->role_id=$request->role_id;
         $user->email=$request->email;
-        $user->password=$request->password;
+        $user->password=bcrypt(request('password'));
         if($user->save()){
             return new UserResource($user);
+        }else{
+            return message('Invalid');
         }
     }
 
@@ -70,7 +81,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+      return response()->json($user);
     }
 
     /**
@@ -82,13 +94,22 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            // 'lname'=>'required|string|max:255|',
+            // 'fname'=>'required|string|max:255|',
+            // 'mname'=>'string|max:255|',
+            // 'email'=>'required|string|email|unique|max:255',
+            'password' => 'min:8',
+            'confirmpassword' => 'required_with:password|same:password|min:8'
+            ]);
+
         $user=User::FindOrFail($id);
         $user->lname=$request->lname;
         $user->fname=$request->fname;
         $user->mname=$request->mname;
         $user->role_id=$request->role_id;
         $user->email=$request->email;
-        $user->password=$request->password;
+        $user -> password = bcrypt(request('password'));
         if($user->save()){
         return new UserResource($user);
         }

@@ -14,13 +14,13 @@ class RoleResource extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
+        return parent::toArray($request);
 
-        return [
+        /* return [
             'id' => $this->id,
             'role_name' => $this->role_name,
             'role_description' => $this->role_description
 
-        ];
+        ]; */
     }
 }

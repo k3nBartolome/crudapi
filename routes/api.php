@@ -37,9 +37,9 @@ Route::put('/roles/{id}',[RoleController::class,'update']);
 Route::put('/users/{id}',[UserController::class,'update']);
 
 //API for delete
-Route::delete('/roles/{id}',[RoleController::class,'destroy']);
-Route::delete('/users/{id}',[UserController::class,'destroy']);
+Route::delete('/role/{id}',[RoleController::class,'destroy']);
+Route::delete('/user/{id}',[UserController::class,'destroy']);
 
 //API for login
 Route::post('/register', [AuthController::class,'register']);
-Route::post('/login', [AuthController::class,'login']);
+Route::post('login',[AuthController::class,'login'])->name('login');
